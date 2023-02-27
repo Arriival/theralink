@@ -1,0 +1,13 @@
+package com.service.personnel;
+
+import com.core.framework.service.IGenericService;
+import com.domain.Personnel;
+import com.domain.PersonnelType;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+public interface IPersonnelService extends IGenericService<Personnel, String> {
+    Page<Personnel> getAllGrid(PersonnelType type, Pageable pageable);
+
+    Personnel loadByPersonId(String personId);
+}

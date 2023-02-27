@@ -1,0 +1,69 @@
+package com.service.secretaryWorkTime;
+
+import com.core.framework.repository.IGenericRepository;
+import com.core.framework.service.GenericService;
+import com.core.framework.utils.SecurityUtil;
+import com.domain.Personnel;
+import com.domain.SecretaryWorkTime;
+import com.repository.secretaryWorkTime.ISecretaryWorkTimeRepository;
+import com.service.personnel.IPersonnelService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.sql.Timestamp;
+import java.time.Instant;
+
+@Service
+public class SecretaryWorkTimeService extends GenericService<SecretaryWorkTime, String> implements ISecretaryWorkTimeService {
+
+	@Autowired
+	private ISecretaryWorkTimeRepository iSecretaryWorkTimeRepository;
+
+	@Autowired
+	private IPersonnelService iPersonnelService;
+
+	@Override
+	protected IGenericRepository<SecretaryWorkTime, String> getGenericRepo() {
+		return iSecretaryWorkTimeRepository;
+	}
+
+	@Override
+	public Page<SecretaryWorkTime> getAllGrid(String personnelId, Pageable pageable) {
+		return iSecretaryWorkTimeRepository.getAllGrid(personnelId, pageable);
+	}
+
+	@Override
+	public SecretaryWorkTime loadUnFinishedActivity() {
+		String authenticatedPersonId = SecurityUtil.getAuthenticatedUser().getPerson().getId();
+		Personnel personnel = iPersonnelService.loadByPersonId(authenticatedPersonId);
+		if (personnel == null) {
+			return null;
+		}
+		return iSecretaryWorkTimeRepository.loadUnFinishedActivity(personnel.getId());
+	}
+
+	@Transactional
+	@Override
+	public boolean setActivity() {
+		String authenticatedPersonId = SecurityUtil.getAuthenticatedUser().getPerson().getId();
+		Personnel personnel = iPersonnelService.loadByPersonId(authenticatedPersonId);
+		if (personnel == null) {
+			return false;
+		}
+		SecretaryWorkTime unFinishedActivity = iSecretaryWorkTimeRepository.loadUnFinishedActivity(personnel.getId());
+		if (unFinishedActivity == null) {
+			SecretaryWorkTime workTime = new SecretaryWorkTime();
+			workTime.setSecretary(personnel);
+			workTime.setStart(Timestamp.from(Instant.now()));
+			return super.save(workTime) != null;
+		}
+		else {
+			unFinishedActivity.setEnd(Timestamp.from(Instant.now()));
+			return super.save(unFinishedActivity) != null;
+		}
+	}
+
+}
