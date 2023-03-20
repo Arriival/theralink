@@ -5,8 +5,7 @@ import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
-
+import java.util.Date;
 
 @Data
 @Entity
@@ -18,9 +17,12 @@ public class SecretaryWorkTime extends BaseEntity<String> {
     private Personnel secretary;
 
     @Column(name = "START", nullable = false)
-    private Timestamp start;
+    private Date start;
 
     @Column(name = "END")
-    private Timestamp end;
+    private Date end;
+
+    @Column(name = "SALARY")
+    private Float salary;
 
 }

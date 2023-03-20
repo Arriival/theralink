@@ -29,7 +29,7 @@ public class CounselingSession extends BaseEntity<String> {
 	private Date start;
 
 	@Column(name = "END")
-	private Date ent;
+	private Date end;
 
 	@Column(name = "CUSTOMER_FEE")
 	private Float customerFee;

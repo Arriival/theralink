@@ -11,15 +11,16 @@ import java.util.Date;
 @Data
 public class SecretaryWorkTimeViewModel extends BaseEntityViewModel<String> {
 
-	private String    secretaryId;
-	private String    secretaryFirstName;
-	private String    secretaryLastName;
-	private Timestamp start;
-	private Timestamp end;
-	private String    jalaliDate;
-	private String    startTime;
-	private String    endTime;
-	private Integer   duration;
+	private String  secretaryId;
+	private String  secretaryFirstName;
+	private String  secretaryLastName;
+	private Date    start;
+	private Date    end;
+	private String  jalaliDate;
+	private String  startTime;
+	private String  endTime;
+	private Integer duration;
+	private Float salary;
 
 	public String getJalaliDate() {
 		return DateUtility.miladiToJalali(this.start);
@@ -29,22 +30,26 @@ public class SecretaryWorkTimeViewModel extends BaseEntityViewModel<String> {
 		if (this.start == null) {
 			return null;
 		}
-		return DateUtility.getTimeFromTimestamp(this.start);
+		return DateUtility.getTimeFromDate(this.start);
 	}
 
 	public String getEndTime() {
 		if (this.end == null) {
 			return null;
 		}
-		return DateUtility.getTimeFromTimestamp(this.end);
+		return DateUtility.getTimeFromDate(this.end);
 	}
 
-	public Integer getDuration() {
-		if (this.end == null || this.start == null) {
-			return null;
+	public Long getDuration() {
+		long diff = 0;
+		if (end == null) {
+			Date current = new Date();
+			diff = current.getTime() - start.getTime();
 		}
-		long milliseconds = this.end.getTime() - this.start.getTime();
-		int seconds = (int) milliseconds / 1000;
-		return seconds / 60;
+		else {
+			diff = end.getTime() - start.getTime();
+		}
+		long diffMinutes = (diff / 1000) / 60;
+		return diffMinutes;
 	}
 }

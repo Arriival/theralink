@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class PersonnelService extends GenericService<Personnel, String> implements IPersonnelService {
@@ -36,6 +37,11 @@ public class PersonnelService extends GenericService<Personnel, String> implemen
     @Override
     public Personnel loadByPersonId(String personId){
         return iPersonnelRepository.loadByPersonId(personId);
+    }
+
+    @Override
+    public List<Personnel> consultantsList() {
+        return iPersonnelRepository.consultantsList();
     }
 
     @Override

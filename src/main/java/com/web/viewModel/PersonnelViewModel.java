@@ -15,4 +15,8 @@ public class PersonnelViewModel extends BaseEntityViewModel<String> {
     private String personnelType;
 //    private String personnelTypeTitle;
 //    private String personnelTypePersianTitle;
+
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
 }
