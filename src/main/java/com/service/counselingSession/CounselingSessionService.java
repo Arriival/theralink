@@ -1,15 +1,19 @@
 package com.service.counselingSession;
 
+import com.core.framework.domain.baseInformation.BaseInformation;
 import com.core.framework.repository.IGenericRepository;
 import com.core.framework.service.GenericService;
+import com.core.framework.service.baseInformation.IBaseInformationService;
 import com.core.framework.utils.DateUtility;
 import com.domain.CounselingSession;
 import com.domain.Customer;
 import com.domain.InsuranceTariff;
+import com.domain.Personnel;
 import com.repository.counselingSession.ICounselingSessionRepository;
 import com.repository.customer.ICustomerRepository;
 import com.service.customer.ICustomerService;
 import com.service.insuranceTariff.IInsuranceTariffService;
+import com.service.personnel.IPersonnelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,16 +21,26 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
+import java.text.DateFormat;
 import java.time.Duration;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.time.temporal.Temporal;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class CounselingSessionService extends GenericService<CounselingSession, String> implements ICounselingSessionService {
 
 	@Autowired
 	private ICounselingSessionRepository iCounselingSessionRepository;
+
+	@Autowired
+	private IBaseInformationService iBaseInformationService;
+
+	@Autowired
+	private IPersonnelService iPersonnelService;
 
 	@Autowired
 	private IInsuranceTariffService iInsuranceTariffService;
@@ -56,8 +70,17 @@ public class CounselingSessionService extends GenericService<CounselingSession, 
 	@Transactional
 	@Override
 	public String save(CounselingSession entity) {
-		entity.setStart(new Date());
-		return super.save(entity);
+		System.out.println(entity.getStart());
+		System.out.println(entity.getEnd());
+		if (entity.getStart() == null) {
+			entity.setStart(new Date());
+			entity.setEnd(null);
+		}
+		String save = super.save(entity);
+		if (entity.getStart() != null && entity.getEnd() != null) {
+			saveFee(entity);
+		}
+		return save;
 	}
 
 	@Override
@@ -67,20 +90,38 @@ public class CounselingSessionService extends GenericService<CounselingSession, 
 
 	@Transactional
 	@Override
-	public boolean finishSession(String id) {
-		CounselingSession session = load(id);
-		session.setEnd(new Date());
-		long sessionDuration = calculationTime(session);
-		InsuranceTariff insuranceTariff = session.getInsuranceTariff();
-		session.setConsultantFee(sessionDuration * insuranceTariff.getConsultantPaymentFactor());
-		session.setCustomerFee((sessionDuration * insuranceTariff.getCustomerReceivedFactor()) * 10000);
-
-		/*if (insuranceTariff.getCustomerReceivedFactor() == null || insuranceTariff.getCustomerReceivedFactor() == 0) {
-			session.setCustomerFee(0F);
+	public boolean finishSession(String sessionId) {
+		CounselingSession session = load(sessionId);
+		if (session.getEnd() == null) {
+			session.setEnd(new Date());
 		}
-		else {
-			session.setCustomerFee((sessionDuration * insuranceTariff.getCustomerReceivedFactor()) * 10000);
-		}*/
+		return saveFee(session);
+	}
+
+	private boolean saveFee(CounselingSession session) {
+		long sessionDuration = calculationTime(session);
+		InsuranceTariff insuranceTariff = iInsuranceTariffService.load(session.getInsuranceTariff().getId());
+		BaseInformation educationLevel = iPersonnelService.load(session.getConsultant().getId()).getPerson().getEducationLevel();
+		float paymentTariff = 0;
+		switch (educationLevel.getCode()) {
+		case "1":
+			paymentTariff = insuranceTariff.getLisancPaymentFactor();
+			break;
+		case "2":
+			paymentTariff = insuranceTariff.getArshadPaymentFactor();
+			break;
+		case "3":
+			paymentTariff = insuranceTariff.getDrStdPaymentFactor();
+			break;
+		case "4":
+			paymentTariff = insuranceTariff.getDrPaymentFactor();
+			break;
+		case "5":
+			paymentTariff = insuranceTariff.getPostDrPaymentFactor();
+			break;
+		}
+		session.setConsultantFee(sessionDuration * paymentTariff);
+		session.setCustomerFee((sessionDuration * insuranceTariff.getCustomerReceivedFactor()) * 10000);
 		String save = super.save(session);
 		return true;
 	}
@@ -89,5 +130,9 @@ public class CounselingSessionService extends GenericService<CounselingSession, 
 		long diff = session.getEnd().getTime() - session.getStart().getTime();
 		long diffMinutes = (diff / 1000) / 60;
 		return diffMinutes;
+	}
+
+	public static void main(String[] args) {
+		System.out.println(new Date());
 	}
 }
