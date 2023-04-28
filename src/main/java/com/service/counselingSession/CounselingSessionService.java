@@ -6,29 +6,19 @@ import com.core.framework.service.GenericService;
 import com.core.framework.service.baseInformation.IBaseInformationService;
 import com.core.framework.utils.DateUtility;
 import com.domain.CounselingSession;
-import com.domain.Customer;
 import com.domain.InsuranceTariff;
-import com.domain.Personnel;
 import com.repository.counselingSession.ICounselingSessionRepository;
-import com.repository.customer.ICustomerRepository;
-import com.service.customer.ICustomerService;
 import com.service.insuranceTariff.IInsuranceTariffService;
 import com.service.personnel.IPersonnelService;
+import com.web.dto.ConsultantSessionSumDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
-import java.text.DateFormat;
-import java.time.Duration;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
-import java.time.temporal.Temporal;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 @Service
 public class CounselingSessionService extends GenericService<CounselingSession, String> implements ICounselingSessionService {
@@ -56,7 +46,7 @@ public class CounselingSessionService extends GenericService<CounselingSession, 
 	}
 
 	@Override
-	public Page<CounselingSession> consultantSessionHistory(String personnelId, String fromDate, String toDate, Pageable pageable) {
+	public Page<CounselingSession> consultantSessionHistory(String personnelId, String insuranceTariffId, String fromDate, String toDate, Pageable pageable) {
 		String from = fromDate, to = toDate;
 		if (fromDate.equals("")) {
 			from = null;
@@ -64,7 +54,22 @@ public class CounselingSessionService extends GenericService<CounselingSession, 
 		if (toDate.equals("")) {
 			to = null;
 		}
-		return iCounselingSessionRepository.consultantSessionHistory(personnelId, DateUtility.jalaliToMiladi(from), DateUtility.jalaliToMiladi(to), pageable);
+		return iCounselingSessionRepository.consultantSessionHistory(personnelId, insuranceTariffId, DateUtility.jalaliToMiladi(from), DateUtility.jalaliToMiladi(to), pageable);
+	}
+
+	@Override
+	public ConsultantSessionSumDto consultantSessionSum(String personnelId, String fromDate, String toDate, String insuranceTariffId) {
+		String from = fromDate, to = toDate;
+		if (fromDate.equals("")) {
+			from = null;
+		}
+		if (toDate.equals("")) {
+			to = null;
+		}
+		Float consultantFeeSum = iCounselingSessionRepository.consultantFeeSum(personnelId, insuranceTariffId, DateUtility.jalaliToMiladi(from), DateUtility.jalaliToMiladi(to));
+		Float customerFeeSum = iCounselingSessionRepository.customerFeeSum(personnelId, insuranceTariffId, DateUtility.jalaliToMiladi(from), DateUtility.jalaliToMiladi(to));
+		Long sessionTimeSum = iCounselingSessionRepository.sessionTimeSum(personnelId, insuranceTariffId, DateUtility.jalaliToMiladi(from), DateUtility.jalaliToMiladi(to));
+		return new ConsultantSessionSumDto(consultantFeeSum, customerFeeSum, sessionTimeSum);
 	}
 
 	@Transactional
@@ -130,9 +135,5 @@ public class CounselingSessionService extends GenericService<CounselingSession, 
 		long diff = session.getEnd().getTime() - session.getStart().getTime();
 		long diffMinutes = (diff / 1000) / 60;
 		return diffMinutes;
-	}
-
-	public static void main(String[] args) {
-		System.out.println(new Date());
 	}
 }

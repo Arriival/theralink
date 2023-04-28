@@ -19,8 +19,13 @@ public class SecretaryWorkTimeController extends BaseController {
 	private ISecretaryWorkTimeService iSecretaryWorkTimeService;
 
 	@GetMapping(value = "/grid/{personnelId}")
-	public Page<SecretaryWorkTimeViewModel> pagination(@PathVariable String personnelId, Pageable pageable) {
-		return ModelMapperUtil.mapPage(iSecretaryWorkTimeService.getAllGrid(personnelId, pageable), SecretaryWorkTimeViewModel.class);
+	public Page<SecretaryWorkTimeViewModel> pagination(@PathVariable String personnelId, String fromDate, String toDate, Pageable pageable) {
+		return ModelMapperUtil.mapPage(iSecretaryWorkTimeService.getAllGrid(personnelId, fromDate, toDate, pageable), SecretaryWorkTimeViewModel.class);
+	}
+
+	@GetMapping(value = "/salary/sum/{personnelId}")
+	public Float sumSalary(@PathVariable String personnelId, String fromDate, String toDate) {
+		return iSecretaryWorkTimeService.sumSalary(personnelId, fromDate, toDate);
 	}
 
 	@GetMapping(value = "/load/{id}")

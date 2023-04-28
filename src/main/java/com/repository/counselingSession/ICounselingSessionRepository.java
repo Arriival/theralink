@@ -19,9 +19,34 @@ public interface ICounselingSessionRepository extends IGenericRepository<Counsel
 	Page<CounselingSession> customerSessionHistory(@Param("customerId") String customerId, Pageable pageable);
 
 	@Query("select e from CounselingSession e where "
-			+ " e.consultant.id = :personnelId "
+			+ " (:personnelId like'null' or e.consultant.id = :personnelId) "
+			+ " and (:insuranceTariffId like'null' or e.insuranceTariff.id = :insuranceTariffId) "
 			+ " and (:fromDate is null or DATE_FORMAT(e.start, '%Y-%m-%d')  >= :fromDate ) "
 			+ " and (:toDate is null or DATE_FORMAT(e.start, '%Y-%m-%d') <= :toDate  ) "
 			+ " order by e.start desc")
-	Page<CounselingSession> consultantSessionHistory(@Param("personnelId") String personnelId, @Param("fromDate") String fromDate, @Param("toDate") String toDate, Pageable pageable);
+	Page<CounselingSession> consultantSessionHistory(@Param("personnelId") String personnelId, @Param("insuranceTariffId") String insuranceTariffId, @Param("fromDate") String fromDate, @Param("toDate") String toDate, Pageable pageable);
+
+	@Query("select sum(e.consultantFee) from CounselingSession e where "
+			+ " (:personnelId like'null' or e.consultant.id = :personnelId) "
+			+ " and (:insuranceTariffId like'null' or e.insuranceTariff.id = :insuranceTariffId) "
+			+ " and (:fromDate is null or DATE_FORMAT(e.start, '%Y-%m-%d')  >= :fromDate ) "
+			+ " and (:toDate is null or DATE_FORMAT(e.start, '%Y-%m-%d') <= :toDate  ) "
+			+ " order by e.start desc")
+	Float consultantFeeSum(@Param("personnelId") String personnelId, @Param("insuranceTariffId") String insuranceTariffId, @Param("fromDate") String fromDate, @Param("toDate") String toDate);
+
+	@Query("select sum(e.customerFee) from CounselingSession e where "
+			+ " (:personnelId like'null' or e.consultant.id = :personnelId) "
+			+ " and (:insuranceTariffId like'null' or e.insuranceTariff.id = :insuranceTariffId) "
+			+ " and (:fromDate is null or DATE_FORMAT(e.start, '%Y-%m-%d')  >= :fromDate ) "
+			+ " and (:toDate is null or DATE_FORMAT(e.start, '%Y-%m-%d') <= :toDate  ) "
+			+ " order by e.start desc")
+	Float customerFeeSum(@Param("personnelId") String personnelId,@Param("insuranceTariffId") String insuranceTariffId, @Param("fromDate") String fromDate, @Param("toDate") String toDate);
+
+	@Query("select sum(e.end - e.start) from CounselingSession e where "
+			+ " (:personnelId like'null' or e.consultant.id = :personnelId) "
+			+ " and (:insuranceTariffId like'null' or e.insuranceTariff.id = :insuranceTariffId) "
+			+ " and (:fromDate is null or DATE_FORMAT(e.start, '%Y-%m-%d')  >= :fromDate ) "
+			+ " and (:toDate is null or DATE_FORMAT(e.start, '%Y-%m-%d') <= :toDate  ) "
+			+ " order by e.start desc")
+	Long sessionTimeSum(@Param("personnelId") String personnelId,@Param("insuranceTariffId") String insuranceTariffId, @Param("fromDate") String fromDate, @Param("toDate") String toDate);
 }

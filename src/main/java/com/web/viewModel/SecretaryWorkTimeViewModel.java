@@ -12,8 +12,8 @@ import java.util.Date;
 public class SecretaryWorkTimeViewModel extends BaseEntityViewModel<String> {
 
 	private String  secretaryId;
-	private String  secretaryFirstName;
-	private String  secretaryLastName;
+	private String  firstName;
+	private String  lastName;
 	private Date    start;
 	private Date    end;
 	private String  jalaliDate;

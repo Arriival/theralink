@@ -4,6 +4,7 @@ import com.core.framework.common.mapping.ModelMapperUtil;
 import com.core.framework.web.controller.BaseController;
 import com.domain.CounselingSession;
 import com.service.counselingSession.ICounselingSessionService;
+import com.web.dto.ConsultantSessionSumDto;
 import com.web.viewModel.CounselingSessionViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,7 +20,6 @@ public class CounselingSessionController extends BaseController {
 	@Autowired
 	private ICounselingSessionService iCounselingSessionService;
 
-
 	@GetMapping(value = "/grid")
 	public Page<CounselingSessionViewModel> pagination(Pageable pageable) {
 		return ModelMapperUtil.mapPage(iCounselingSessionService.getAllGrid(pageable), CounselingSessionViewModel.class);
@@ -31,8 +31,13 @@ public class CounselingSessionController extends BaseController {
 	}
 
 	@GetMapping(value = "/consultant/history")
-	public Page<CounselingSessionViewModel> consultantSessionHistory(String personnelId, String fromDate, String toDate, Pageable pageable) {
-		return ModelMapperUtil.mapPage(iCounselingSessionService.consultantSessionHistory(personnelId, fromDate, toDate, pageable), CounselingSessionViewModel.class);
+	public Page<CounselingSessionViewModel> consultantSessionHistory(String personnelId, String insuranceTariffId, String fromDate, String toDate, Pageable pageable) {
+		return ModelMapperUtil.mapPage(iCounselingSessionService.consultantSessionHistory(personnelId, insuranceTariffId, fromDate, toDate, pageable), CounselingSessionViewModel.class);
+	}
+
+	@GetMapping(value = "/consultant/sum")
+	public ConsultantSessionSumDto consultantSessionSum(String personnelId, String insuranceTariffId, String fromDate, String toDate) {
+		return iCounselingSessionService.consultantSessionSum(personnelId, fromDate, toDate, insuranceTariffId);
 	}
 
 	@GetMapping(value = "/inProcess")

@@ -7,9 +7,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface ISecretaryWorkTimeService extends IGenericService<SecretaryWorkTime, String> {
-    SecretaryWorkTime loadUnFinishedActivity();
+	Page<SecretaryWorkTime> getAllGrid(String personnelId, String fromDate, String toDate, Pageable pageable);
+
+	SecretaryWorkTime loadUnFinishedActivity();
 
     boolean setActivity();
 
-	Page<SecretaryWorkTime> getAllGrid(String personnelId, Pageable pageable);
+	Float sumSalary(String personnelId, String fromDate, String toDate);
 }

@@ -20,4 +20,7 @@ public class Personnel extends BaseEntity<String> {
     @Enumerated(EnumType.STRING)
     private PersonnelType personnelType;
 
+    @Column(name = "SECRETARY_WAGE")
+    private Float secretaryHourlyWage;
+
 }

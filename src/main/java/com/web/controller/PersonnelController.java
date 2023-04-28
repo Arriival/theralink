@@ -4,6 +4,7 @@ import com.core.framework.common.jasperReport.JasperPrint;
 import com.core.framework.common.jasperReport.ReportParameterList;
 import com.core.framework.common.mapping.ModelMapperUtil;
 import com.core.framework.service.reportService.IReportService;
+import com.core.framework.utils.SecurityUtil;
 import com.core.framework.web.controller.BaseController;
 import com.domain.Personnel;
 import com.domain.PersonnelType;
@@ -43,6 +44,11 @@ public class PersonnelController extends BaseController {
     @GetMapping(value = "/load/{id}")
     public PersonnelViewModel load(@PathVariable String id) {
         return ModelMapperUtil.map(iPersonnelService.load(id), PersonnelViewModel.class);
+    }
+
+    @GetMapping(value = "/authenticated/info")
+    public PersonnelViewModel getPersonnelId() {
+        return ModelMapperUtil.map(iPersonnelService.loadByPersonId(SecurityUtil.getAuthenticatedUser().getPerson().getId()), PersonnelViewModel.class);
     }
 
     @PostMapping(value = "/save")

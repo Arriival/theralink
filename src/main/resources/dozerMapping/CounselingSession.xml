@@ -24,6 +24,18 @@
             <b-hint>java.lang.String</b-hint>
         </field>
         <field>
+            <a>customer.phone</a>
+            <b>customerPhone</b>
+            <a-hint>java.lang.String</a-hint>
+            <b-hint>java.lang.String</b-hint>
+        </field>
+        <field>
+            <a>customer.nationalCode</a>
+            <b>customerNationalCode</b>
+            <a-hint>java.lang.String</a-hint>
+            <b-hint>java.lang.String</b-hint>
+        </field>
+        <field>
             <a>consultant.id</a>
             <b>consultantId</b>
             <a-hint>java.lang.String</a-hint>

@@ -6,7 +6,6 @@ import com.core.framework.utils.DateUtility;
 import com.core.framework.utils.SecurityUtil;
 import com.domain.Personnel;
 import com.domain.SecretaryWorkTime;
-import com.domain.Setting;
 import com.repository.secretaryWorkTime.ISecretaryWorkTimeRepository;
 import com.service.personnel.IPersonnelService;
 import com.service.setting.ISettingService;
@@ -16,8 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.Date;
 
 @Service
@@ -38,8 +35,15 @@ public class SecretaryWorkTimeService extends GenericService<SecretaryWorkTime, 
 	}
 
 	@Override
-	public Page<SecretaryWorkTime> getAllGrid(String personnelId, Pageable pageable) {
-		return iSecretaryWorkTimeRepository.getAllGrid(personnelId, pageable);
+	public Page<SecretaryWorkTime> getAllGrid(String personnelId, String fromDate, String toDate, Pageable pageable) {
+		String from = fromDate, to = toDate;
+		if (fromDate.equals("")) {
+			from = null;
+		}
+		if (toDate.equals("")) {
+			to = null;
+		}
+		return iSecretaryWorkTimeRepository.getAllGrid(personnelId, DateUtility.jalaliToMiladi(from), DateUtility.jalaliToMiladi(to), pageable);
 	}
 
 	@Override
@@ -68,13 +72,23 @@ public class SecretaryWorkTimeService extends GenericService<SecretaryWorkTime, 
 			return super.save(workTime) != null;
 		}
 		else {
-			String value = iSettingService.loadByKey("SECRETARY_WAGES_PER_HOUR").getValue();
 			unFinishedActivity.setEnd(new Date());
-			Long salaryUnit = Long.valueOf(value);
 			Long duration = DateUtility.differenceMin(unFinishedActivity.getStart(), unFinishedActivity.getEnd());
-			unFinishedActivity.setSalary(Float.valueOf((duration*salaryUnit)/60));
+			unFinishedActivity.setSalary(Float.valueOf((duration) * personnel.getSecretaryHourlyWage() / 60));
 			return super.save(unFinishedActivity) != null;
 		}
+	}
+
+	@Override
+	public Float sumSalary(String personnelId, String fromDate, String toDate) {
+		String from = fromDate, to = toDate;
+		if (fromDate.equals("")) {
+			from = null;
+		}
+		if (toDate.equals("")) {
+			to = null;
+		}
+		return iSecretaryWorkTimeRepository.salarySum(personnelId, DateUtility.jalaliToMiladi(from), DateUtility.jalaliToMiladi(to));
 	}
 
 }
