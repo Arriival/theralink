@@ -39,6 +39,8 @@
 			<rightPen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
+	<parameter name="fromDate" class="java.util.Date"/>
+	<parameter name="toDate" class="java.util.Date"/>
 	<queryString>
 		<![CDATA[SELECT
 	p.id AS personnelid,
@@ -46,12 +48,13 @@
 	it.title as insurancetitle,
 	it.id AS insuranceid,
 	COUNT( it.title ) as count,
-	SUM( s.consultant_fee ) as fee 
+	SUM( s.consultant_fee ) as fee
 FROM
 	mac_counseling_session s
 	LEFT JOIN mac_personnel p ON p.id = s.personnel_id
 	LEFT JOIN app_person person ON person.id = p.person_id
-	RIGHT JOIN mac_insurance_tariff it ON it.id = s.insurance_tariff_id 
+	RIGHT JOIN mac_insurance_tariff it ON it.id = s.insurance_tariff_id
+		where (s.start >= $P{fromDate}   or  $P{fromDate} is null) and (s.`end` <=  $P{toDate} or  $P{toDate} is null)
 GROUP BY
 	person.first_name,
 	person.last_name,

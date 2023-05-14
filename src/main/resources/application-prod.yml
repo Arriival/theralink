@@ -2,10 +2,10 @@ spring:
   datasource:
     username: root
     password: Mehr@zin123
-    url: jdbc:mysql://185.79.157.44:3306/mehr
-#    url: jdbc:mysql://localhost:3306/mehr
+#    url: jdbc:mysql://185.79.157.44:3306/mehr
+    url: jdbc:mysql://localhost:3306/mehr
   jpa:
-    hibernate.ddl-auto: update
+    hibernate.ddl-auto: none
     generate-ddl: false
     show-sql: true
     properties:

@@ -58,7 +58,7 @@ public class SecretaryWorkTimeService extends GenericService<SecretaryWorkTime, 
 
 	@Transactional
 	@Override
-	public boolean setActivity() {
+	public boolean setActivity(Date start, Date end) {
 		String authenticatedPersonId = SecurityUtil.getAuthenticatedUser().getPerson().getId();
 		Personnel personnel = iPersonnelService.loadByPersonId(authenticatedPersonId);
 		if (personnel == null) {
@@ -68,11 +68,11 @@ public class SecretaryWorkTimeService extends GenericService<SecretaryWorkTime, 
 		if (unFinishedActivity == null) {
 			SecretaryWorkTime workTime = new SecretaryWorkTime();
 			workTime.setSecretary(personnel);
-			workTime.setStart(new Date());
+			workTime.setStart(start);
 			return super.save(workTime) != null;
 		}
 		else {
-			unFinishedActivity.setEnd(new Date());
+			unFinishedActivity.setEnd(end);
 			Long duration = DateUtility.differenceMin(unFinishedActivity.getStart(), unFinishedActivity.getEnd());
 			unFinishedActivity.setSalary(Float.valueOf((duration) * personnel.getSecretaryHourlyWage() / 60));
 			return super.save(unFinishedActivity) != null;

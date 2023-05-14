@@ -4,12 +4,15 @@ import com.core.framework.common.mapping.ModelMapperUtil;
 import com.core.framework.web.controller.BaseController;
 import com.domain.SecretaryWorkTime;
 import com.service.secretaryWorkTime.ISecretaryWorkTimeService;
+import com.web.dto.TimeDto;
 import com.web.viewModel.ConsultantTypeViewModel;
 import com.web.viewModel.SecretaryWorkTimeViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 
 @RestController
 @RequestMapping("secretaryWorkTime")
@@ -44,9 +47,9 @@ public class SecretaryWorkTimeController extends BaseController {
 		return iSecretaryWorkTimeService.save(ModelMapperUtil.map(entity, SecretaryWorkTime.class));
 	}
 
-	@GetMapping(value = "/activity")
+	@PostMapping(value = "/activity")
 	@ResponseBody
-	public boolean setActivity() {
-		return iSecretaryWorkTimeService.setActivity();
+	public boolean setActivity(@RequestBody TimeDto timeDto) {
+		return iSecretaryWorkTimeService.setActivity(timeDto.getStart(), timeDto.getEnd());
 	}
 }
