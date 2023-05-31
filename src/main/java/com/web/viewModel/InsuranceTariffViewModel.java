@@ -8,6 +8,7 @@ import javax.persistence.Column;
 @Data
 public class InsuranceTariffViewModel extends BaseEntityViewModel<String> {
 	private String title;
+	private Integer sessionTime;
 	private Float  customerReceivedFactor;
 	private Float  lisancPaymentFactor;
 	private Float  arshadPaymentFactor;

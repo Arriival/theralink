@@ -21,6 +21,7 @@ public class CounselingSessionViewModel extends BaseEntityViewModel<String> {
 	private Float  consultantFee;
 	private String insuranceTariffId;
 	private String insuranceTariffTitle;
+	private Integer minutes;
 
 	public long getDuration() {
 		long diff = 0;

@@ -16,6 +16,9 @@ public class InsuranceTariff extends BaseEntity<String> {
 	@Column(name = "TITLE", nullable = false)
 	private String title;
 
+	@Column(name = "SESSION_TIME")
+	private Integer sessionTime;
+
 	@Column(name = "CUSTOMER_RECEIVED_FACTOR")
 	private Float customerReceivedFactor;
 
