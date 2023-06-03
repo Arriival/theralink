@@ -10,10 +10,10 @@ import org.springframework.data.repository.query.Param;
 
 public interface IBillRepository extends IGenericRepository<Bill, String> {
 
-	@Query("select e from Bill e where (e.date >= :fromDate or :fromDate is null ) and (e.date <= :toDate or :toDate is null) order by e.createdDate desc ")
+	@Query("select e from Bill e where ( :fromDate is null  or e.date >= :fromDate) and (:toDate is null or e.date <= :toDate ) order by e.createdDate desc ")
 	Page<Bill> search(@Param("fromDate") String fromDate, @Param("toDate") String toDate, Pageable pageable);
 
-	@Query("select sum(e.cost) as cost, sum (e.income) as income from Bill e where (e.date >= :fromDate or :fromDate is null ) and (e.date <= :toDate or :toDate is null)")
+	@Query("select sum(e.cost) as cost, sum (e.income) as income from Bill e where (:fromDate is null  or e.date >= :fromDate) and (:toDate is null or e.date <= :toDate ) ")
 	IBillDto sum(@Param("fromDate") String fromDate, @Param("toDate") String toDate);
 }
 

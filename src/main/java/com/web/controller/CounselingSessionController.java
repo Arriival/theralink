@@ -9,11 +9,13 @@ import com.core.framework.web.controller.BaseController;
 import com.domain.CounselingSession;
 import com.service.counselingSession.ICounselingSessionService;
 import com.web.dto.ConsultantSessionSumDto;
+import com.web.dto.NumberOfCustomerSessionDto;
 import com.web.viewModel.CounselingSessionViewModel;
 import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -39,6 +41,11 @@ public class CounselingSessionController extends BaseController {
 	@GetMapping(value = "/customer/history")
 	public Page<CounselingSessionViewModel> customerSessionHistory(String customerId, Pageable pageable) {
 		return ModelMapperUtil.mapPage(iCounselingSessionService.customerSessionHistory(customerId, pageable), CounselingSessionViewModel.class);
+	}
+
+	@GetMapping(value = "/customer/sessions/{customerId}")
+	public NumberOfCustomerSessionDto numberOfCustomerSession(@PathVariable String customerId) {
+		return iCounselingSessionService.numberOfCustomerSession(customerId);
 	}
 
 	@GetMapping(value = "/consultant/history")
@@ -78,12 +85,13 @@ public class CounselingSessionController extends BaseController {
 	}
 
 	@GetMapping(value = "/excel")
-	public void report(String fromDate, String toDate, HttpServletResponse response) throws JRException, IOException {
+	public void report(String fromDate, String toDate,String personnelId, HttpServletResponse response) throws JRException, IOException {
 		ReportParameterList parameterList = new ReportParameterList();
 		List<JasperPrint> jasperPrintList = new ArrayList<>();
 		response.setHeader("Set-Cookie", "fileDownload=true; path=/");
 		parameterList.addParameter("fromDate", DateUtility.jalaliToDate(fromDate));
 		parameterList.addParameter("toDate", DateUtility.jalaliToDate(toDate));
+		parameterList.addParameter("personnelId", personnelId);
 		String jrxmlPath = "/mehrazin-report.jrxml";
 		jasperPrintList.add(new JasperPrint(jrxmlPath, parameterList));
 		iReportService.exportXlsxJasperPrintList(response, "report", jasperPrintList);

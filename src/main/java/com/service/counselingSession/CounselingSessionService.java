@@ -11,6 +11,7 @@ import com.repository.counselingSession.ICounselingSessionRepository;
 import com.service.insuranceTariff.IInsuranceTariffService;
 import com.service.personnel.IPersonnelService;
 import com.web.dto.ConsultantSessionSumDto;
+import com.web.dto.NumberOfCustomerSessionDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -43,6 +44,17 @@ public class CounselingSessionService extends GenericService<CounselingSession, 
 	@Override
 	public Page<CounselingSession> customerSessionHistory(String customerId, Pageable pageable) {
 		return iCounselingSessionRepository.customerSessionHistory(customerId, pageable);
+	}
+
+	@Override
+	public NumberOfCustomerSessionDto numberOfCustomerSession(String customerId) {
+		Date firstMonth = new Date(DateUtility.getFirstMonthTimestamp().getTime());
+		Float inMonth = iCounselingSessionRepository.numberOfCustomerSession(customerId, firstMonth);
+		Float total = iCounselingSessionRepository.numberOfCustomerSession(customerId, null);
+		NumberOfCustomerSessionDto dto = new NumberOfCustomerSessionDto();
+		dto.setInMonth(inMonth == null ? 0 : inMonth);
+		dto.setTotal(total == null ? 0 : total);
+		return dto;
 	}
 
 	@Override

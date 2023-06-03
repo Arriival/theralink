@@ -77,6 +77,7 @@
 	</style>
 	<parameter name="fromDate" class="java.util.Date"/>
 	<parameter name="toDate" class="java.util.Date"/>
+	<parameter name="personnelId" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
 	p.id AS personnelid,
@@ -93,7 +94,8 @@ FROM
 	LEFT JOIN mac_personnel p ON p.id = s.personnel_id
 	LEFT JOIN app_person person ON person.id = p.person_id
 	RIGHT JOIN mac_insurance_tariff it ON it.id = s.insurance_tariff_id
-		where (s.start <= $P{fromDate}   or  $P{fromDate} is null) and (s.`end` <=  $P{toDate} or  $P{toDate} is null)
+		where (s.start >= $P{fromDate}   or  $P{fromDate} is null) and (s.`end` <=  $P{toDate} or  $P{toDate} is null)
+		and ($P{personnelId} like 'null' or s.personnel_id = $P{personnelId} )
 GROUP BY
 	person.first_name,
 	person.last_name,

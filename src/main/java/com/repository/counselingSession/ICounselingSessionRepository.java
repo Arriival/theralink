@@ -18,6 +18,10 @@ public interface ICounselingSessionRepository extends IGenericRepository<Counsel
 	@Query("select e from CounselingSession e where e.customer.id = :customerId and e.end is not null order by e.start desc")
 	Page<CounselingSession> customerSessionHistory(@Param("customerId") String customerId, Pageable pageable);
 
+	@Query(value = "select SUM(TIMESTAMPDIFF(MINUTE, e.start, e.end))/t.session_time from MAC_COUNSELING_SESSION e left join MAC_INSURANCE_TARIFF t on t.id = e.INSURANCE_TARIFF_ID "
+			+ " where e.customer_id = :customerId and e.end is not null and (e.start >= :first or :first is null)", nativeQuery = true)
+	Float numberOfCustomerSession(@Param("customerId") String customerId , @Param("first") Date firstMonth );
+
 	@Query("select e from CounselingSession e where "
 			+ " (:personnelId like'null' or e.consultant.id = :personnelId) "
 			+ " and (:insuranceTariffId like'null' or e.insuranceTariff.id = :insuranceTariffId) "

@@ -7,20 +7,21 @@ import java.util.Date;
 
 @Data
 public class CounselingSessionViewModel extends BaseEntityViewModel<String> {
-	private String consultantId;
-	private String consultantFirstName;
-	private String consultantLastName;
-	private String customerId;
-	private String customerFirstName;
-	private String customerLastName;
-	private String customerPhone;
-	private String customerNationalCode;
-	private Date   start;
-	private Date   end;
-	private Float  customerFee;
-	private Float  consultantFee;
-	private String insuranceTariffId;
-	private String insuranceTariffTitle;
+	private String  consultantId;
+	private String  consultantFirstName;
+	private String  consultantLastName;
+	private String  customerId;
+	private String  customerFirstName;
+	private String  customerLastName;
+	private String  customerPhone;
+	private String  customerNationalCode;
+	private Date    start;
+	private Date    end;
+	private Float   customerFee;
+	private Float   consultantFee;
+	private String  insuranceTariffId;
+	private String  insuranceTariffTitle;
+	private Integer insuranceTariffTime;
 	private Integer minutes;
 
 	public long getDuration() {
