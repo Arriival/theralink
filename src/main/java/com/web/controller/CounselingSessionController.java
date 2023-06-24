@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -85,12 +86,16 @@ public class CounselingSessionController extends BaseController {
 	}
 
 	@GetMapping(value = "/excel")
-	public void report(String fromDate, String toDate,String personnelId, HttpServletResponse response) throws JRException, IOException {
+	public void report(String fromDate, String toDate, String personnelId, HttpServletResponse response) throws JRException, IOException {
 		ReportParameterList parameterList = new ReportParameterList();
 		List<JasperPrint> jasperPrintList = new ArrayList<>();
 		response.setHeader("Set-Cookie", "fileDownload=true; path=/");
 		parameterList.addParameter("fromDate", DateUtility.jalaliToDate(fromDate));
-		parameterList.addParameter("toDate", DateUtility.jalaliToDate(toDate));
+		Date var_toDate = DateUtility.jalaliToDate(toDate);
+		var_toDate.setHours(23);
+		var_toDate.setMinutes(59);
+		var_toDate.setSeconds(59);
+		parameterList.addParameter("toDate", var_toDate);
 		parameterList.addParameter("personnelId", personnelId);
 		String jrxmlPath = "/mehrazin-report.jrxml";
 		jasperPrintList.add(new JasperPrint(jrxmlPath, parameterList));
