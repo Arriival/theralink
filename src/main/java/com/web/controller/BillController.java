@@ -8,7 +8,9 @@ import com.web.dto.IBillDto;
 import com.web.viewModel.BillViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,6 +22,7 @@ public class BillController extends BaseController {
 
 	@GetMapping(value = "/grid")
 	public Page<BillViewModel> pagination(Pageable pageable) {
+		pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.DESC, "date"));
 		return ModelMapperUtil.mapPage(iBillService.getAllGrid(pageable), BillViewModel.class);
 	}
 
