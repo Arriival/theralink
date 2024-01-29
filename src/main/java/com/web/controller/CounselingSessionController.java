@@ -11,6 +11,7 @@ import com.service.counselingSession.ICounselingSessionService;
 import com.web.dto.ConsultantSessionSumDto;
 import com.web.dto.NumberOfCustomerSessionDto;
 import com.web.viewModel.CounselingSessionViewModel;
+import com.web.viewModel.CustomerViewModel;
 import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -39,6 +40,17 @@ public class CounselingSessionController extends BaseController {
 		return ModelMapperUtil.mapPage(iCounselingSessionService.getAllGrid(pageable), CounselingSessionViewModel.class);
 	}
 
+	@PostMapping(value = "/save")
+	@ResponseBody
+	public String save(@RequestBody CounselingSessionViewModel entity) {
+		return iCounselingSessionService.save(ModelMapperUtil.map(entity, CounselingSession.class));
+	}
+
+	@DeleteMapping(value = "/delete/{id}")
+	public boolean delete(@PathVariable String id) {
+		return iCounselingSessionService.deleteById(id);
+	}
+
 	@GetMapping(value = "/customer/history")
 	public Page<CounselingSessionViewModel> customerSessionHistory(String customerId, Pageable pageable) {
 		return ModelMapperUtil.mapPage(iCounselingSessionService.customerSessionHistory(customerId, pageable), CounselingSessionViewModel.class);
@@ -47,6 +59,11 @@ public class CounselingSessionController extends BaseController {
 	@GetMapping(value = "/customer/sessions/{customerId}")
 	public NumberOfCustomerSessionDto numberOfCustomerSession(@PathVariable String customerId) {
 		return iCounselingSessionService.numberOfCustomerSession(customerId);
+	}
+
+	@GetMapping(value = "/current")
+	public CounselingSessionViewModel currentSession() {
+		return ModelMapperUtil.map(iCounselingSessionService.currentSession(), CounselingSessionViewModel.class);
 	}
 
 	@GetMapping(value = "/consultant/history")
@@ -74,15 +91,9 @@ public class CounselingSessionController extends BaseController {
 		return ModelMapperUtil.map(iCounselingSessionService.load(id), CounselingSessionViewModel.class);
 	}
 
-	@PostMapping(value = "/save")
-	@ResponseBody
-	public String save(@RequestBody CounselingSessionViewModel entity) {
-		return iCounselingSessionService.save(ModelMapperUtil.map(entity, CounselingSession.class));
-	}
-
-	@DeleteMapping(value = "/delete/{id}")
-	public boolean delete(@PathVariable String id) {
-		return iCounselingSessionService.deleteById(id);
+	@GetMapping(value = "/consultant/customers")
+	public Page<CustomerViewModel> getConsultantCustomers(String personnelId, String search, Pageable pageable) {
+		return ModelMapperUtil.mapPage(iCounselingSessionService.consultantCustomers(personnelId, search, pageable), CustomerViewModel.class);
 	}
 
 	@GetMapping(value = "/excel")

@@ -34,7 +34,18 @@ public class CounselingSession extends BaseEntity<String> {
 	@Column(name = "CUSTOMER_FEE")
 	private Float customerFee;
 
+	@Column(name = "SESSION_COUNT")
+	private Float sessionCount;
+
 	@Column(name = "CONSULTANT_FEE")
 	private Float consultantFee;
+
+	@Lob
+	@Column(name = "SESSION_DESCRIPTION" )
+	private String sessionDescription;
+
+	@Lob
+	@Column(name = "NEXT_MEETING_AGENDA")
+	private String nextMeetingAgenda;
 
 }

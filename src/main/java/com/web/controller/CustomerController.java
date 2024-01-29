@@ -7,7 +7,9 @@ import com.service.customer.ICustomerService;
 import com.web.viewModel.CustomerViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,8 +20,9 @@ public class CustomerController extends BaseController {
 	private ICustomerService iCustomerService;
 
 	@GetMapping(value = "/grid")
-	public Page<CustomerViewModel> pagination(Pageable pageable) {
-		return ModelMapperUtil.mapPage(iCustomerService.getAllGrid(pageable), CustomerViewModel.class);
+	public Page<CustomerViewModel> pagination(Pageable pageable, String searchTxt) {
+		pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSort().descending());
+		return ModelMapperUtil.mapPage(iCustomerService.getAllGrid(pageable, searchTxt), CustomerViewModel.class);
 	}
 
 	@GetMapping(value = "/load/{id}")

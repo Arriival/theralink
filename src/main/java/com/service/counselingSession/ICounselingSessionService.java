@@ -22,4 +22,8 @@ public interface ICounselingSessionService extends IGenericService<CounselingSes
 	NumberOfCustomerSessionDto numberOfCustomerSession(String customerId);
 
 	Page<CounselingSession> consultantSessionHistory(String personnelId, String insuranceTariffId, String fromDate, String toDate, Pageable pageable);
+
+	CounselingSession currentSession();
+
+	Page<Customer> consultantCustomers(String personnelId, String search, Pageable pageable);
 }

@@ -87,7 +87,7 @@
 	COUNT( it.title ) as count,
 	SUM( s.consultant_fee ) as consultant_fee ,
 	SUM( s.customer_fee ) as customer_fee ,
-    SUM(TIMESTAMPDIFF(MINUTE, s.start, s.end)) / it.session_time as duration
+    SUM( s.session_count ) as duration
 
 FROM
 	mac_counseling_session s

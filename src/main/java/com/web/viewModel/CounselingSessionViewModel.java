@@ -15,8 +15,11 @@ public class CounselingSessionViewModel extends BaseEntityViewModel<String> {
 	private String  customerLastName;
 	private String  customerPhone;
 	private String  customerNationalCode;
+	private String  sessionDescription;
+	private String  nextMeetingAgenda;
 	private Date    start;
 	private Date    end;
+	private Float   sessionCount	;
 	private Float   customerFee;
 	private Float   consultantFee;
 	private String  insuranceTariffId;

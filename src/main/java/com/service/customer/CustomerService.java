@@ -5,6 +5,8 @@ import com.core.framework.service.GenericService;
 import com.domain.Customer;
 import com.repository.customer.ICustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,5 +28,11 @@ public class CustomerService extends GenericService<Customer, String> implements
 	@Override
 	public long count() {
 		return iCustomerRepository.count();
+	}
+
+	@Override
+	public Page<Customer> getAllGrid(Pageable pageable, String searchTxt) {
+		return iCustomerRepository.getAllGrid(searchTxt, pageable);
+
 	}
 }
