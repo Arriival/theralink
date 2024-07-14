@@ -5,6 +5,7 @@ import com.domain.CounselingSession;
 import com.domain.Customer;
 import com.web.dto.ConsultantSessionSumDto;
 import com.web.dto.NumberOfCustomerSessionDto;
+import com.web.dto.ISessionDescriptionsDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -17,7 +18,7 @@ public interface ICounselingSessionService extends IGenericService<CounselingSes
 
 	boolean finishSession(String id);
 
-	Page<CounselingSession> customerSessionHistory(String customerId, Pageable pageable);
+	Page<CounselingSession> customerSessionHistory(String customerId, boolean withAuthorize, Pageable pageable);
 
 	NumberOfCustomerSessionDto numberOfCustomerSession(String customerId);
 
@@ -26,4 +27,6 @@ public interface ICounselingSessionService extends IGenericService<CounselingSes
 	CounselingSession currentSession();
 
 	Page<Customer> consultantCustomers(String personnelId, String search, Pageable pageable);
+
+	List<ISessionDescriptionsDto> sessionDescriptions(String customerId);
 }

@@ -4,6 +4,7 @@ import com.core.framework.common.mapping.ModelMapperUtil;
 import com.core.framework.web.controller.BaseController;
 import com.domain.Customer;
 import com.service.customer.ICustomerService;
+import com.web.viewModel.CustomerFileInfoViewModel;
 import com.web.viewModel.CustomerViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,6 +29,11 @@ public class CustomerController extends BaseController {
 	@GetMapping(value = "/load/{id}")
 	public CustomerViewModel load(@PathVariable String id) {
 		return ModelMapperUtil.map(iCustomerService.load(id), CustomerViewModel.class);
+	}
+
+	@GetMapping(value = "/file/{id}")
+	public CustomerFileInfoViewModel file(@PathVariable String id) {
+		return ModelMapperUtil.map(iCustomerService.load(id), CustomerFileInfoViewModel.class);
 	}
 
 	@GetMapping(value = "/find")

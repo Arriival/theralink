@@ -10,13 +10,13 @@ import com.domain.CounselingSession;
 import com.service.counselingSession.ICounselingSessionService;
 import com.web.dto.ConsultantSessionSumDto;
 import com.web.dto.NumberOfCustomerSessionDto;
+import com.web.dto.ISessionDescriptionsDto;
 import com.web.viewModel.CounselingSessionViewModel;
 import com.web.viewModel.CustomerViewModel;
 import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -52,8 +52,8 @@ public class CounselingSessionController extends BaseController {
 	}
 
 	@GetMapping(value = "/customer/history")
-	public Page<CounselingSessionViewModel> customerSessionHistory(String customerId, Pageable pageable) {
-		return ModelMapperUtil.mapPage(iCounselingSessionService.customerSessionHistory(customerId, pageable), CounselingSessionViewModel.class);
+	public Page<CounselingSessionViewModel> customerSessionHistory(String customerId, boolean withAuthorize, Pageable pageable) {
+		return ModelMapperUtil.mapPage(iCounselingSessionService.customerSessionHistory(customerId,withAuthorize, pageable), CounselingSessionViewModel.class);
 	}
 
 	@GetMapping(value = "/customer/sessions/{customerId}")
@@ -96,6 +96,13 @@ public class CounselingSessionController extends BaseController {
 		return ModelMapperUtil.mapPage(iCounselingSessionService.consultantCustomers(personnelId, search, pageable), CustomerViewModel.class);
 	}
 
+
+	@GetMapping(value = "/customer/descriptions/timeline")
+	public List<ISessionDescriptionsDto> sessionDescriptions(String customerId) {
+		return iCounselingSessionService.sessionDescriptions(customerId);
+	}
+
+
 	@GetMapping(value = "/excel")
 	public void report(String fromDate, String toDate, String personnelId, HttpServletResponse response) throws JRException, IOException {
 		ReportParameterList parameterList = new ReportParameterList();
@@ -112,5 +119,4 @@ public class CounselingSessionController extends BaseController {
 		jasperPrintList.add(new JasperPrint(jrxmlPath, parameterList));
 		iReportService.exportXlsxJasperPrintList(response, "report", jasperPrintList);
 	}
-
 }

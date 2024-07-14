@@ -9,6 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 public class CustomerService extends GenericService<Customer, String> implements ICustomerService {
 
@@ -33,6 +35,26 @@ public class CustomerService extends GenericService<Customer, String> implements
 	@Override
 	public Page<Customer> getAllGrid(Pageable pageable, String searchTxt) {
 		return iCustomerRepository.getAllGrid(searchTxt, pageable);
+	}
 
+	@Transactional
+	@Override
+	public String save(Customer entity) {
+		Customer loadedEntity = load(entity.getId());
+
+		if (loadedEntity != null) {
+			loadedEntity.setGenoGram(entity.getGenoGram());
+			loadedEntity.setPsychologistVisitHistory(entity.getPsychologistVisitHistory());
+			loadedEntity.setDrugUseHistory(entity.getDrugUseHistory());
+			loadedEntity.setSicknessHistory(entity.getSicknessHistory());
+			loadedEntity.setSleepingStatus(entity.getSleepingStatus());
+			loadedEntity.setLifeStyle(entity.getLifeStyle());
+			loadedEntity.setProblems(entity.getProblems());
+			loadedEntity.setProblemBeginning(entity.getProblemBeginning());
+			loadedEntity.setProblemCause(entity.getProblemCause());
+			loadedEntity.setTestsDone(entity.getTestsDone());
+			loadedEntity.setFirstRecognition(entity.getFirstRecognition());
+		}
+		return super.save(loadedEntity);
 	}
 }

@@ -3,6 +3,7 @@ package com.repository.counselingSession;
 import com.core.framework.repository.IGenericRepository;
 import com.domain.CounselingSession;
 import com.domain.Customer;
+import com.web.dto.ISessionDescriptionsDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -15,8 +16,8 @@ public interface ICounselingSessionRepository extends IGenericRepository<Counsel
 	@Query("select e from CounselingSession e where e.end is null order by e.start desc ")
 	List<CounselingSession> inProcessList();
 
-	@Query("select e from CounselingSession e where e.customer.id = :customerId and e.end is not null order by e.start desc")
-	Page<CounselingSession> customerSessionHistory(@Param("customerId") String customerId, Pageable pageable);
+	@Query("select e from CounselingSession e where (:personId is null or e.consultant.person.id = :personId) and e.customer.id = :customerId and e.end is not null order by e.start desc")
+	Page<CounselingSession> customerSessionHistory(@Param("customerId") String customerId, @Param("personId") String personId, Pageable pageable);
 
 	@Query(value = "select SUM(e.SESSION_COUNT)from MAC_COUNSELING_SESSION e"
 			+ " where e.customer_id = :customerId and e.end is not null and (e.start >= :first or :first is null)", nativeQuery = true)
@@ -63,4 +64,8 @@ public interface ICounselingSessionRepository extends IGenericRepository<Counsel
 	@Query("select distinct e.customer from CounselingSession e where e.consultant.person.id = :consultantPersonId and	"
 			+ "  (:search is null  or e.customer.nationalCode like CONCAT('%',:search,'%') or CONCAT(e.customer.firstname,' ', e.customer.lastname) like CONCAT('%',:search,'%'))")
 	Page<Customer> consultantCustomers(@Param("consultantPersonId") String consultantPersonId, @Param("search") String search, Pageable pageable);
+
+
+	@Query("select e.id as id,e.sessionDescription as sessionDescription, e.nextMeetingAgenda as nextMeetingAgenda, e.start as sessionDate from CounselingSession e where e.consultant.person.id = :consultantId and e.customer.id = :customerId order by e.start desc ")
+	List<ISessionDescriptionsDto> sessionDescriptions(@Param("consultantId") String consultantId, @Param("customerId") String customerId);
 }

@@ -2,11 +2,12 @@ package com.domain;
 
 import com.core.framework.domain.BaseEntity;
 import com.core.framework.domain.baseInformation.BaseInformation;
-import com.core.framework.domain.person.Person;
 import lombok.Data;
+import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Data
 @Entity
@@ -81,5 +82,12 @@ public class Customer extends BaseEntity<String> {
 
 	@Column(name = "FIRST_RECOGNITION")
 	private String firstRecognition;
+
+	@ManyToOne
+	@JoinColumn(name = "CUSTOMER_LEVELING")
+	private CustomerLeveling customerLeveling;
+
+	@Formula("(SELECT MAX(S.END) FROM MAC_COUNSELING_SESSION S WHERE S.CUSTOMER_ID = ID)")
+	private Date lastVisit;
 
 }

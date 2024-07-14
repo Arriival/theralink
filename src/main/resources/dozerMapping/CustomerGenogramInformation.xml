@@ -3,49 +3,39 @@
           xsi:schemaLocation="http://dozer.sourceforge.net
       http://dozer.sourceforge.net/schema/beanmapping.xsd">
     <mapping map-null="false">
-        <class-a>com.domain.Customer</class-a>
-        <class-b>com.web.viewModel.CustomerViewModel</class-b>
+        <class-a>com.domain.CustomerGenogramInformation</class-a>
+        <class-b>com.web.viewModel.CustomerGenogramInformationViewModel</class-b>
         <field>
-            <a>insuranceTariff.id</a>
-            <b>insuranceTariffId</b>
+            <a>customer.id</a>
+            <b>customerId</b>
             <a-hint>java.lang.String</a-hint>
             <b-hint>java.lang.String</b-hint>
         </field>
         <field>
-            <a>insuranceTariff.title.</a>
-            <b>insuranceTariffTitle</b>
+            <a>customer.firstname</a>
+            <b>firstname</b>
             <a-hint>java.lang.String</a-hint>
             <b-hint>java.lang.String</b-hint>
         </field>
         <field>
-            <a>educationLevel.id</a>
-            <b>educationLevelId</b>
+            <a>customer.lastname</a>
+            <b>lastname</b>
             <a-hint>java.lang.String</a-hint>
             <b-hint>java.lang.String</b-hint>
         </field>
         <field>
-            <a>educationLevel.topic</a>
-            <b>educationLevelTitle</b>
+            <a>field.id</a>
+            <b>fieldId</b>
             <a-hint>java.lang.String</a-hint>
             <b-hint>java.lang.String</b-hint>
         </field>
 
         <field>
-            <a>customerLeveling.id</a>
-            <b>customerLevelingId</b>
+            <a>field.topic</a>
+            <b>fieldTitle</b>
             <a-hint>java.lang.String</a-hint>
             <b-hint>java.lang.String</b-hint>
         </field>
- <!--       <field>
-            <a>customerLeveling.title</a>
-            <b>customerLevelingTitle</b>
-            <a-hint>java.lang.String</a-hint>
-            <b-hint>java.lang.String</b-hint>
-        </field>
-        <field>
-            <a>customerLeveling.duration</a>
-            <b>customerLevelingDuration</b>
-        </field>-->
 
     </mapping>
 </mappings>

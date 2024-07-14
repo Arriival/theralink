@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class SettingService extends GenericService<Setting, String> implements ISettingService {
@@ -38,5 +39,10 @@ public class SettingService extends GenericService<Setting, String> implements I
             newWage.setValue(value);
             return super.save(newWage);
         }
+    }
+
+    @Override
+    public List<Setting> list() {
+        return iSettingRepository.list();
     }
 }

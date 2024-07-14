@@ -1,6 +1,7 @@
 package com.service.counselingSession;
 
 import com.core.framework.domain.baseInformation.BaseInformation;
+import com.core.framework.domain.user.Role;
 import com.core.framework.repository.IGenericRepository;
 import com.core.framework.service.GenericService;
 import com.core.framework.service.baseInformation.IBaseInformationService;
@@ -9,12 +10,12 @@ import com.core.framework.utils.SecurityUtil;
 import com.domain.CounselingSession;
 import com.domain.Customer;
 import com.domain.InsuranceTariff;
-import com.domain.Personnel;
 import com.repository.counselingSession.ICounselingSessionRepository;
 import com.service.insuranceTariff.IInsuranceTariffService;
 import com.service.personnel.IPersonnelService;
 import com.web.dto.ConsultantSessionSumDto;
 import com.web.dto.NumberOfCustomerSessionDto;
+import com.web.dto.ISessionDescriptionsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -45,8 +46,15 @@ public class CounselingSessionService extends GenericService<CounselingSession, 
 	}
 
 	@Override
-	public Page<CounselingSession> customerSessionHistory(String customerId, Pageable pageable) {
-		return iCounselingSessionRepository.customerSessionHistory(customerId, pageable);
+	public Page<CounselingSession> customerSessionHistory(String customerId, boolean withAuthorize, Pageable pageable) {
+		List<Role> authenticatedUserRoles = SecurityUtil.getAuthenticatedUserRoles();
+		if (withAuthorize) {
+			String personId = SecurityUtil.getAuthenticatedUser().getPerson().getId();
+			return iCounselingSessionRepository.customerSessionHistory(customerId, personId, pageable);
+		}
+		else {
+			return iCounselingSessionRepository.customerSessionHistory(customerId, null, pageable);
+		}
 	}
 
 	@Override
@@ -90,6 +98,12 @@ public class CounselingSessionService extends GenericService<CounselingSession, 
 			consultantId = SecurityUtil.getAuthenticatedUser().getPerson().getId();
 		}
 		return iCounselingSessionRepository.consultantCustomers(consultantId, search, pageable);
+	}
+
+	@Override
+	public List<ISessionDescriptionsDto> sessionDescriptions(String customerId) {
+		String consultantId = SecurityUtil.getAuthenticatedUser().getPerson().getId();
+		return iCounselingSessionRepository.sessionDescriptions(consultantId, customerId);
 	}
 
 	@Override
@@ -159,6 +173,9 @@ public class CounselingSessionService extends GenericService<CounselingSession, 
 		if (session.getEnd() == null) {
 			session.setEnd(new Date());
 		}
+		long duration = getDuration(session.getStart(), session.getEnd());
+		Integer sessionTime = iInsuranceTariffService.load(session.getInsuranceTariff().getId()).getSessionTime();
+		session.setSessionCount((float) (duration / sessionTime.floatValue()));
 		return saveFee(session);
 	}
 

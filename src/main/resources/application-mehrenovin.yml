@@ -3,7 +3,6 @@ spring:
     username: root
     password: Mehr@zin123
     url: jdbc:mysql://localhost:3306/mehrnovin
-#    url: jdbc:mysql://localhost:3306/mehr
   jpa:
     hibernate.ddl-auto: none
     generate-ddl: false
@@ -11,6 +10,8 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
+server:
+  port: 8081
 
 
 

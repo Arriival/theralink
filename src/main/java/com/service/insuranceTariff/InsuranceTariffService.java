@@ -2,6 +2,7 @@ package com.service.insuranceTariff;
 
 import com.core.framework.repository.IGenericRepository;
 import com.core.framework.service.GenericService;
+import com.core.framework.utils.DateUtility;
 import com.domain.InsuranceTariff;
 import com.repository.insuranceTariff.IInsuranceTariffRepository;
 import com.web.dto.IChartDto;
@@ -22,7 +23,7 @@ public class InsuranceTariffService extends GenericService<InsuranceTariff, Stri
 	}
 
 	@Override
-	public List<IChartDto> chart() {
-		return iInsuranceTariffRepository.chart();
+	public List<IChartDto> chart(String from, String to) {
+		return iInsuranceTariffRepository.chart(DateUtility.jalaliToDate(from), DateUtility.jalaliToDate(to));
 	}
 }

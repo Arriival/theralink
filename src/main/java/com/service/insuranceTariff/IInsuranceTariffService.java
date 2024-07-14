@@ -7,5 +7,5 @@ import com.web.dto.IChartDto;
 import java.util.List;
 
 public interface IInsuranceTariffService extends IGenericService<InsuranceTariff, String> {
-	List<IChartDto> chart();
+	List<IChartDto> chart(String from, String to);
 }

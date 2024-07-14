@@ -59,6 +59,19 @@
                 <spring.profiles.active>prod</spring.profiles.active>
             </properties>
         </profile>
+        <profile>
+            <id>mehrazin</id>
+            <properties>
+                <spring.profiles.active>mehrazin</spring.profiles.active>
+            </properties>
+
+        </profile>
+        <profile>
+            <id>mehrenovin</id>
+            <properties>
+                <spring.profiles.active>mehrenovin</spring.profiles.active>
+            </properties>
+        </profile>
     </profiles>
     <build>
         <plugins>

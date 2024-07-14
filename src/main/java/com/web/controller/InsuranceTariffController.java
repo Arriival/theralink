@@ -39,8 +39,8 @@ public class InsuranceTariffController extends BaseController {
 	}
 
 	@GetMapping(value = "/chart")
-	public List<IChartDto> chart() {
-		return iInsuranceTariffService.chart();
+	public List<IChartDto> chart(String from, String to) {
+		return iInsuranceTariffService.chart(from, to);
 	}
 
 }

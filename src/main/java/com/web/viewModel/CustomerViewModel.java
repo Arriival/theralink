@@ -3,6 +3,8 @@ package com.web.viewModel;
 import com.core.framework.web.viewModel.BaseEntityViewModel;
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class CustomerViewModel extends BaseEntityViewModel<String> {
 	private String  firstName;
@@ -14,7 +16,7 @@ public class CustomerViewModel extends BaseEntityViewModel<String> {
 	private String  insuranceTariffId;
 	private String  educationLevelTitle;
 	private String  educationLevelId;
-	private int  age;
+	private int     age;
 	private String  job;
 	private Boolean married;
 	private Boolean marriageHistory;
@@ -29,4 +31,8 @@ public class CustomerViewModel extends BaseEntityViewModel<String> {
 	private String  problemCause;
 	private String  testsDone;
 	private String  firstRecognition;
+	private String  customerLevelingId;
+	//	private String  customerLevelingTitle;
+	//	private int     customerLevelingDuration;
+	private Date    lastVisit;
 }
