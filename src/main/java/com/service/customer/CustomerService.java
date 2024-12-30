@@ -40,9 +40,9 @@ public class CustomerService extends GenericService<Customer, String> implements
 	@Transactional
 	@Override
 	public String save(Customer entity) {
-		Customer loadedEntity = load(entity.getId());
-
-		if (loadedEntity != null) {
+		if (entity.getId() != null) {
+			Customer loadedEntity = load(entity.getId());
+			loadedEntity = entity;
 			loadedEntity.setGenoGram(entity.getGenoGram());
 			loadedEntity.setPsychologistVisitHistory(entity.getPsychologistVisitHistory());
 			loadedEntity.setDrugUseHistory(entity.getDrugUseHistory());
@@ -54,7 +54,11 @@ public class CustomerService extends GenericService<Customer, String> implements
 			loadedEntity.setProblemCause(entity.getProblemCause());
 			loadedEntity.setTestsDone(entity.getTestsDone());
 			loadedEntity.setFirstRecognition(entity.getFirstRecognition());
+			return super.save(loadedEntity);
 		}
-		return super.save(loadedEntity);
+		else {
+			return super.save(entity);
+		}
+
 	}
 }

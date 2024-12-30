@@ -10,9 +10,11 @@ import com.core.framework.utils.SecurityUtil;
 import com.domain.CounselingSession;
 import com.domain.Customer;
 import com.domain.InsuranceTariff;
+import com.domain.Setting;
 import com.repository.counselingSession.ICounselingSessionRepository;
 import com.service.insuranceTariff.IInsuranceTariffService;
 import com.service.personnel.IPersonnelService;
+import com.service.setting.ISettingService;
 import com.web.dto.ConsultantSessionSumDto;
 import com.web.dto.NumberOfCustomerSessionDto;
 import com.web.dto.ISessionDescriptionsDto;
@@ -36,6 +38,9 @@ public class CounselingSessionService extends GenericService<CounselingSession, 
 
 	@Autowired
 	private IPersonnelService iPersonnelService;
+
+	@Autowired
+	private ISettingService iSettingService;
 
 	@Autowired
 	private IInsuranceTariffService iInsuranceTariffService;
@@ -201,9 +206,33 @@ public class CounselingSessionService extends GenericService<CounselingSession, 
 			paymentTariff = insuranceTariff.getPostDrPaymentFactor();
 			break;
 		}
-		session.setConsultantFee(sessionDuration * paymentTariff);
-		session.setCustomerFee((sessionDuration * insuranceTariff.getCustomerReceivedFactor()) * 10000);
-		String save = super.save(session);
+
+		Setting maxConsultantWagesPerSession = iSettingService.loadByKey("MAX_CONSULTANT_WAGES_PER_SESSION");
+		Setting maxSessionPrice = iSettingService.loadByKey("MAX_SESSION_PRICE");
+		if (maxConsultantWagesPerSession != null && !maxConsultantWagesPerSession.getValue().isEmpty()) {
+			float maxVal = Float.parseFloat(maxConsultantWagesPerSession.getValue());
+			if (maxVal >= 0) {
+				if (sessionDuration * paymentTariff > maxVal) {
+					session.setConsultantFee(maxVal);
+				}
+			}
+		}
+		else {
+			session.setConsultantFee(sessionDuration * paymentTariff);
+		}
+
+		if (maxSessionPrice != null && !maxSessionPrice.getValue().isEmpty()) {
+			float maxVal = Float.parseFloat(maxSessionPrice.getValue());
+			if (maxVal >= 0) {
+				if ((sessionDuration * insuranceTariff.getCustomerReceivedFactor()) * 10000 > maxVal) {
+					session.setCustomerFee(maxVal);
+				}
+			}
+		}
+		else {
+			session.setCustomerFee((sessionDuration * insuranceTariff.getCustomerReceivedFactor()) * 10000);
+		}
+		super.save(session);
 		return true;
 	}
 
