@@ -3,34 +3,34 @@
           xsi:schemaLocation="http://dozer.sourceforge.net
       http://dozer.sourceforge.net/schema/beanmapping.xsd">
     <mapping map-null="false">
-        <class-a>com.domain.CounselingSession</class-a>
-        <class-b>com.web.viewModel.CounselingSessionViewModel</class-b>
+        <class-a>com.theralink.domain.CounselingSession</class-a>
+        <class-b>com.theralink.web.viewModel.CounselingSessionViewModel</class-b>
         <field>
-            <a>customer.id</a>
+            <a>client.id</a>
             <b>customerId</b>
             <a-hint>java.lang.String</a-hint>
             <b-hint>java.lang.String</b-hint>
         </field>
         <field>
-            <a>customer.firstName</a>
+            <a>client.firstName</a>
             <b>customerFirstName</b>
             <a-hint>java.lang.String</a-hint>
             <b-hint>java.lang.String</b-hint>
         </field>
         <field>
-            <a>customer.lastName</a>
+            <a>client.lastName</a>
             <b>customerLastName</b>
             <a-hint>java.lang.String</a-hint>
             <b-hint>java.lang.String</b-hint>
         </field>
         <field>
-            <a>customer.phone</a>
+            <a>client.cellPhone</a>
             <b>customerPhone</b>
             <a-hint>java.lang.String</a-hint>
             <b-hint>java.lang.String</b-hint>
         </field>
         <field>
-            <a>customer.nationalCode</a>
+            <a>client.nationalCode</a>
             <b>customerNationalCode</b>
             <a-hint>java.lang.String</a-hint>
             <b-hint>java.lang.String</b-hint>

@@ -3,22 +3,22 @@
           xsi:schemaLocation="http://dozer.sourceforge.net
       http://dozer.sourceforge.net/schema/beanmapping.xsd">
     <mapping map-null="false">
-        <class-a>com.domain.CustomerLevelingDescription</class-a>
-        <class-b>com.web.viewModel.CustomerLevelingDescriptionViewModel</class-b>
+        <class-a>com.theralink.domain.CustomerLevelingDescription</class-a>
+        <class-b>com.theralink.web.viewModel.CustomerLevelingDescriptionViewModel</class-b>
         <field>
-            <a>customer.id</a>
+            <a>client.id</a>
             <b>customerId</b>
             <a-hint>java.lang.String</a-hint>
             <b-hint>java.lang.String</b-hint>
         </field>
         <field>
-            <a>customer.firstname</a>
+            <a>client.firstname</a>
             <b>firstname</b>
             <a-hint>java.lang.String</a-hint>
             <b-hint>java.lang.String</b-hint>
         </field>
         <field>
-            <a>customer.lastname</a>
+            <a>client.lastname</a>
             <b>lastname</b>
             <a-hint>java.lang.String</a-hint>
             <b-hint>java.lang.String</b-hint>

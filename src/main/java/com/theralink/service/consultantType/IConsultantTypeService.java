@@ -1,0 +1,10 @@
+package com.theralink.service.consultantType;
+
+import com.core.framework.service.IGenericService;
+import com.theralink.domain.ConsultantType;
+
+import java.util.List;
+
+public interface IConsultantTypeService extends IGenericService<ConsultantType, String> {
+    List<ConsultantType> getAllList();
+}
