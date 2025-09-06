@@ -4,7 +4,6 @@ import com.core.framework.common.mapping.ModelMapperUtil;
 import com.core.framework.web.controller.BaseController;
 import com.theralink.domain.Setting;
 import com.theralink.service.setting.ISettingService;
-import com.theralink.web.viewModel.CustomerViewModel;
 import com.theralink.web.viewModel.SettingViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

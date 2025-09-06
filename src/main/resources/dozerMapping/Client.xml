@@ -3,8 +3,20 @@
           xsi:schemaLocation="http://dozer.sourceforge.net
       http://dozer.sourceforge.net/schema/beanmapping.xsd">
     <mapping map-null="false">
-        <class-a>com.theralink.domain.Client</class-a>
-        <class-b>com.theralink.web.viewModel.CustomerViewModel</class-b>
+        <class-a>com.theralink.domain.client.model.Client</class-a>
+        <class-b>com.theralink.domain.client.dto.ClientViewModel</class-b>
+        <field>
+            <a>clinic.id</a>
+            <b>clinicId</b>
+            <a-hint>java.lang.String</a-hint>
+            <b-hint>java.lang.String</b-hint>
+        </field>
+        <field>
+            <a>clinic.name</a>
+            <b>clinicName</b>
+            <a-hint>java.lang.String</a-hint>
+            <b-hint>java.lang.String</b-hint>
+        </field>
         <field>
             <a>insuranceTariff.id</a>
             <b>insuranceTariffId</b>

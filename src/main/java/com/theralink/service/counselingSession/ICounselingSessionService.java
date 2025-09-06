@@ -2,7 +2,7 @@ package com.theralink.service.counselingSession;
 
 import com.core.framework.service.IGenericService;
 import com.theralink.domain.CounselingSession;
-import com.theralink.domain.Client;
+import com.theralink.domain.client.model.Client;
 import com.theralink.web.dto.ConsultantSessionSumDto;
 import com.theralink.web.dto.NumberOfCustomerSessionDto;
 import com.theralink.web.dto.ISessionDescriptionsDto;

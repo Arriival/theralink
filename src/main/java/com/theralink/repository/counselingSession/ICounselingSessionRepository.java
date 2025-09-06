@@ -2,7 +2,7 @@ package com.theralink.repository.counselingSession;
 
 import com.core.framework.repository.IGenericRepository;
 import com.theralink.domain.CounselingSession;
-import com.theralink.domain.Client;
+import com.theralink.domain.client.model.Client;
 import com.theralink.web.dto.ISessionDescriptionsDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

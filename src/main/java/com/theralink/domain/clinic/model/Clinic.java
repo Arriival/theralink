@@ -43,4 +43,11 @@ public class Clinic extends OrganizationStructure {
 	@JoinColumn(name = "LOGO_ID")
 	private Document logo;
 
+	public Clinic(String id) {
+		super.setId(id);
+	}
+
+	public Clinic() {
+
+	}
 }

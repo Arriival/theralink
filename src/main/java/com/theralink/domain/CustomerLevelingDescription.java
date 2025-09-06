@@ -1,6 +1,7 @@
 package com.theralink.domain;
 
 import com.core.framework.domain.BaseEntity;
+import com.theralink.domain.client.model.Client;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 

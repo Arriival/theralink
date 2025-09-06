@@ -8,7 +8,7 @@ import com.core.framework.service.baseInformation.IBaseInformationService;
 import com.core.framework.utils.DateUtility;
 import com.core.framework.utils.SecurityUtil;
 import com.theralink.domain.CounselingSession;
-import com.theralink.domain.Client;
+import com.theralink.domain.client.model.Client;
 import com.theralink.domain.InsuranceTariff;
 import com.theralink.domain.Setting;
 import com.theralink.repository.counselingSession.ICounselingSessionRepository;

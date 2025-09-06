@@ -12,7 +12,7 @@ import com.theralink.web.dto.ConsultantSessionSumDto;
 import com.theralink.web.dto.NumberOfCustomerSessionDto;
 import com.theralink.web.dto.ISessionDescriptionsDto;
 import com.theralink.web.viewModel.CounselingSessionViewModel;
-import com.theralink.web.viewModel.CustomerViewModel;
+import com.theralink.domain.client.dto.ClientViewModel;
 import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -92,8 +92,8 @@ public class CounselingSessionController extends BaseController {
 	}
 
 	@GetMapping(value = "/consultant/customers")
-	public Page<CustomerViewModel> getConsultantCustomers(String personnelId, String search, Pageable pageable) {
-		return ModelMapperUtil.mapPage(iCounselingSessionService.consultantCustomers(personnelId, search, pageable), CustomerViewModel.class);
+	public Page<ClientViewModel> getConsultantCustomers(String personnelId, String search, Pageable pageable) {
+		return ModelMapperUtil.mapPage(iCounselingSessionService.consultantCustomers(personnelId, search, pageable), ClientViewModel.class);
 	}
 
 

@@ -1,4 +1,4 @@
-package com.theralink.web.viewModel;
+package com.theralink.domain.client.dto;
 
 import com.core.framework.web.viewModel.BaseEntityViewModel;
 import lombok.Data;
@@ -6,7 +6,9 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class CustomerViewModel extends BaseEntityViewModel<String> {
+public class ClientViewModel extends BaseEntityViewModel<String> {
+	private String  clinicId;
+	private String  clinicName;
 	private String  firstName;
 	private String  lastName;
 	private String  phone;

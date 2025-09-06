@@ -1,11 +1,11 @@
-package com.theralink.web.controller;
+package com.theralink.domain.client.controller;
 
 import com.core.framework.common.mapping.ModelMapperUtil;
 import com.core.framework.web.controller.BaseController;
-import com.theralink.domain.Client;
-import com.theralink.service.customer.ICustomerService;
+import com.theralink.domain.client.model.Client;
+import com.theralink.domain.client.service.IClientService;
 import com.theralink.web.viewModel.CustomerFileInfoViewModel;
-import com.theralink.web.viewModel.CustomerViewModel;
+import com.theralink.domain.client.dto.ClientViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,20 +14,20 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("customer")
-public class CustomerController extends BaseController {
+public class ClientController extends BaseController {
 
 	@Autowired
-	private ICustomerService iCustomerService;
+	private IClientService iCustomerService;
 
 	@GetMapping(value = "/grid")
-	public Page<CustomerViewModel> pagination(Pageable pageable, String searchTxt) {
+	public Page<ClientViewModel> pagination(Pageable pageable, String searchTxt) {
 		pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSort().descending());
-		return ModelMapperUtil.mapPage(iCustomerService.getAllGrid(pageable, searchTxt), CustomerViewModel.class);
+		return ModelMapperUtil.mapPage(iCustomerService.getAllGrid(pageable, searchTxt), ClientViewModel.class);
 	}
 
 	@GetMapping(value = "/load/{id}")
-	public CustomerViewModel load(@PathVariable String id) {
-		return ModelMapperUtil.map(iCustomerService.load(id), CustomerViewModel.class);
+	public ClientViewModel load(@PathVariable String id) {
+		return ModelMapperUtil.map(iCustomerService.load(id), ClientViewModel.class);
 	}
 
 	@GetMapping(value = "/file/{id}")
@@ -36,13 +36,13 @@ public class CustomerController extends BaseController {
 	}
 
 	@GetMapping(value = "/find")
-	public CustomerViewModel find(String nationalCode) {
-		return ModelMapperUtil.map(iCustomerService.find(nationalCode), CustomerViewModel.class);
+	public ClientViewModel find(String nationalCode) {
+		return ModelMapperUtil.map(iCustomerService.find(nationalCode), ClientViewModel.class);
 	}
 
 	@PostMapping(value = "/save")
 	@ResponseBody
-	public String save(@RequestBody CustomerViewModel entity) {
+	public String save(@RequestBody ClientViewModel entity) {
 		return iCustomerService.save(ModelMapperUtil.map(entity, Client.class));
 	}
 

@@ -1,21 +1,26 @@
-package com.theralink.domain;
+package com.theralink.domain.client.model;
 
-import com.core.framework.domain.BaseInformation;
 import com.core.framework.domain.Person;
+import com.theralink.domain.CustomerLeveling;
+import com.theralink.domain.InsuranceTariff;
+import com.theralink.domain.clinic.model.Clinic;
 import com.theralink.domain.user.model.ClientProfile;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.Formula;
-import org.hibernate.annotations.GenericGenerator;
 
 import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "MAC_CUSTOMER", uniqueConstraints = { @UniqueConstraint(columnNames = { "NATIONAL_CODE" }) })
+@Table(name = "MAC_CLIENT", uniqueConstraints = { @UniqueConstraint(columnNames = { "NATIONAL_CODE" }) })
 //@GenericGenerator(name = "sequence_db", strategy = "org.hibernate.id.UUIDGenerator")
 @PrimaryKeyJoinColumn(name = "id") // اشاره به همان ID جدول Person
 public class Client extends Person {
+
+	@ManyToOne
+	@JoinColumn(name = "CLINIC_ID", nullable = false)
+	private Clinic clinic;
 
 	@OneToOne(mappedBy = "client")
 	private ClientProfile clientProfile;
