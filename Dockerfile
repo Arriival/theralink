@@ -1,5 +1,5 @@
 # ---------- Stage 1: Build ----------
-FROM maven:3.9-eclipse-temurin-21 AS build
+FROM FROM hub.hamdocker.ir/maven:3.9-eclipse-temurin-21 AS build
 WORKDIR /app
 
 # کپی pom و دانلود dependencies (با cache)
@@ -11,7 +11,7 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # ---------- Stage 2: Runtime ----------
-FROM eclipse-temurin:21-jre
+FROM FROM hub.hamdocker.ir/eclipse-temurin:21-jre
 WORKDIR /app
 
 # کپی jar اجرایی از مرحله build
