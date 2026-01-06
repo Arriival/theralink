@@ -1,0 +1,19 @@
+package com.theralink.web.viewModel;
+
+import com.theralink.web.viewModel.BaseEntityViewModel;
+import lombok.Data;
+
+import jakarta.persistence.Column;
+
+@Data
+public class InsuranceTariffViewModel extends BaseEntityViewModel<String> {
+	private String  title;
+	private Boolean isDisabled;
+	private Integer sessionTime;
+	private Float   customerReceivedFactor;
+	private Float   lisancPaymentFactor;
+	private Float   arshadPaymentFactor;
+	private Float   drStdPaymentFactor;
+	private Float   drPaymentFactor;
+	private Float   postDrPaymentFactor;
+}

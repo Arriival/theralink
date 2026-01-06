@@ -1,0 +1,11 @@
+package com.theralink.web.viewModel.user;
+
+import lombok.Data;
+
+@Data
+public class ChangePasswordDto {
+	private String oldPass;
+	private String newPass;
+	private String rePass;
+	private String userId;
+}

@@ -1,0 +1,24 @@
+app:
+  jwtSecret: f45ec482e8bfa63f7bab11664637317cc71664c1098b1d1d30405c861cc91938
+  session:
+    expireTime: 1440
+
+spring:
+  main:
+    allow-circular-references: true
+  profiles:
+    active: @spring.profiles.active@
+    group:
+      dev:
+        - dev
+  datasource:
+    username: root
+    password: M!y2SQL@
+
+  jpa:
+    show-sql: true
+
+server:
+#    port: 8081
+  port: 8586
+

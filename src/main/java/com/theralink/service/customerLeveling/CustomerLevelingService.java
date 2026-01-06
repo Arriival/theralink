@@ -1,0 +1,38 @@
+package com.theralink.service.customerLeveling;
+
+import com.theralink.common.annotations.ClinicFilter;
+import com.theralink.repository.IGenericRepository;
+import com.theralink.service.GenericService;
+
+import com.theralink.domain.CustomerLeveling;
+import com.theralink.repository.customerLeveling.ICustomerLevelingRepository;
+import com.theralink.utils.UserContextHolder;
+import com.theralink.web.dto.ICustomerPriorityDto;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class CustomerLevelingService extends GenericService<CustomerLeveling, String> implements ICustomerLevelingService {
+
+	@Autowired
+	private ICustomerLevelingRepository iCustomerLevelingRepository;
+
+	@Override
+	protected IGenericRepository<CustomerLeveling, String> getGenericRepo() {
+		return iCustomerLevelingRepository;
+	}
+
+	@ClinicFilter
+	@Override
+	public List<CustomerLeveling> list() {
+		return iCustomerLevelingRepository.list();
+	}
+
+
+	@Override
+	public List<ICustomerPriorityDto> priorityCustomerList() {
+		return iCustomerLevelingRepository.priorityCustomerList(UserContextHolder.getClinic());
+	}
+}

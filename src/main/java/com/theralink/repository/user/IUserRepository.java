@@ -1,0 +1,13 @@
+package com.theralink.repository.user;
+
+import com.theralink.domain.user.User;
+import com.theralink.repository.IGenericRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+public interface IUserRepository extends IGenericRepository<User, String> {
+
+    @Query(value = "select e from User e where e.username = :username")
+    User findByUserName(@Param("username") String username);
+
+}

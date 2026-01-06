@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://dozer.sourceforge.net
+      http://dozer.sourceforge.net/schema/beanmapping.xsd">
+    <mapping map-null="false">
+        <class-a>com.theralink.domain.BaseInformation</class-a>
+        <class-b>com.theralink.web.viewModel.baseInformation.BaseInformationViewModel</class-b>
+        <field>
+            <a>parent.id</a>
+            <b>parentId</b>
+            <a-hint>java.lang.String</a-hint>
+            <b-hint>java.lang.String</b-hint>
+        </field>
+        <field>
+            <a>masterBaseInformation.id</a>
+            <b>masterBaseInformationId</b>
+            <a-hint>java.lang.String</a-hint>
+            <b-hint>java.lang.String</b-hint>
+        </field>
+        <field type="one-way">
+            <a>masterBaseInformation.topic</a>
+            <b>masterBaseInformationTopic</b>
+            <a-hint>java.lang.String</a-hint>
+            <b-hint>java.lang.String</b-hint>
+        </field>
+    </mapping>
+</mappings>

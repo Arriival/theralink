@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://dozer.sourceforge.net
+      http://dozer.sourceforge.net/schema/beanmapping.xsd">
+    <mapping map-null="false">
+        <class-a>com.theralink.domain.References</class-a>
+        <class-b>com.theralink.web.viewModel.ReferencesViewModel</class-b>
+        <field>
+            <a>client.id</a>
+            <b>customerId</b>
+            <a-hint>java.lang.String</a-hint>
+            <b-hint>java.lang.String</b-hint>
+        </field>
+        <field>
+            <a>client.firstName</a>
+            <b>customerFirstname</b>
+            <a-hint>java.lang.String</a-hint>
+            <b-hint>java.lang.String</b-hint>
+        </field>
+        <field>
+            <a>client.lastName</a>
+            <b>customerLastname</b>
+            <a-hint>java.lang.String</a-hint>
+            <b-hint>java.lang.String</b-hint>
+        </field>
+
+        <field>
+            <a>referrer.id</a>
+            <b>referrerId</b>
+            <a-hint>java.lang.String</a-hint>
+            <b-hint>java.lang.String</b-hint>
+        </field>
+        <field>
+            <a>referrer.person.firstName</a>
+            <b>referrerFirstname</b>
+            <a-hint>java.lang.String</a-hint>
+            <b-hint>java.lang.String</b-hint>
+        </field>
+        <field>
+            <a>referrer.person.lastName</a>
+            <b>referrerLastname</b>
+            <a-hint>java.lang.String</a-hint>
+            <b-hint>java.lang.String</b-hint>
+        </field>
+
+        <field>
+            <a>referredTo.id</a>
+            <b>referredToId</b>
+            <a-hint>java.lang.String</a-hint>
+            <b-hint>java.lang.String</b-hint>
+        </field>
+        <field>
+            <a>referredTo.person.firstName</a>
+            <b>referredToFirstname</b>
+            <a-hint>java.lang.String</a-hint>
+            <b-hint>java.lang.String</b-hint>
+        </field>
+        <field>
+            <a>referredTo.person.lastName</a>
+            <b>referredToLastname</b>
+            <a-hint>java.lang.String</a-hint>
+            <b-hint>java.lang.String</b-hint>
+        </field>
+
+        <field>
+            <a>createdDate</a>
+            <b>referralDate</b>
+            <a-hint>java.lang.String</a-hint>
+            <b-hint>java.lang.String</b-hint>
+        </field>
+
+    </mapping>
+</mappings>

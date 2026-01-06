@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://dozer.sourceforge.net
+      http://dozer.sourceforge.net/schema/beanmapping.xsd">
+    <mapping map-null="false">
+        <class-a>com.theralink.domain.client.model.Client</class-a>
+        <class-b>com.theralink.domain.client.dto.ClientViewModel</class-b>
+        <field>
+            <a>clinic.id</a>
+            <b>clinicId</b>
+            <a-hint>java.lang.String</a-hint>
+            <b-hint>java.lang.String</b-hint>
+        </field>
+        <field>
+            <a>clinic.name</a>
+            <b>clinicName</b>
+            <a-hint>java.lang.String</a-hint>
+            <b-hint>java.lang.String</b-hint>
+        </field>
+        <field>
+            <a>insuranceTariff.id</a>
+            <b>insuranceTariffId</b>
+            <a-hint>java.lang.String</a-hint>
+            <b-hint>java.lang.String</b-hint>
+        </field>
+        <field>
+            <a>insuranceTariff.title.</a>
+            <b>insuranceTariffTitle</b>
+            <a-hint>java.lang.String</a-hint>
+            <b-hint>java.lang.String</b-hint>
+        </field>
+        <field>
+            <a>educationLevel.id</a>
+            <b>educationLevelId</b>
+            <a-hint>java.lang.String</a-hint>
+            <b-hint>java.lang.String</b-hint>
+        </field>
+        <field>
+            <a>educationLevel.topic</a>
+            <b>educationLevelTitle</b>
+            <a-hint>java.lang.String</a-hint>
+            <b-hint>java.lang.String</b-hint>
+        </field>
+
+        <field>
+            <a>customerLeveling.id</a>
+            <b>customerLevelingId</b>
+            <a-hint>java.lang.String</a-hint>
+            <b-hint>java.lang.String</b-hint>
+        </field>
+
+    </mapping>
+</mappings>

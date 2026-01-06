@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://dozer.sourceforge.net
+      http://dozer.sourceforge.net/schema/beanmapping.xsd">
+    <mapping map-null="false">
+        <class-a>com.theralink.domain.clinic.model.Clinic</class-a>
+        <class-b>com.theralink.domain.clinic.dto.ClinicViewModel</class-b>
+        <field>
+            <a>province.id</a>
+            <b>provinceId</b>
+            <a-hint>java.lang.String</a-hint>
+            <b-hint>java.lang.String</b-hint>
+        </field>
+        <field>
+            <a>province.topic</a>
+            <b>provinceTitle</b>
+            <a-hint>java.lang.String</a-hint>
+            <b-hint>java.lang.String</b-hint>
+        </field>
+
+        <field>
+            <a>city.id</a>
+            <b>cityId</b>
+            <a-hint>java.lang.String</a-hint>
+            <b-hint>java.lang.String</b-hint>
+        </field>
+        <field>
+            <a>city.topic</a>
+            <b>cityTitle</b>
+            <a-hint>java.lang.String</a-hint>
+            <b-hint>java.lang.String</b-hint>
+        </field>
+    </mapping>
+</mappings>
