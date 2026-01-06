@@ -2,7 +2,8 @@ spring:
   datasource:
     username: root
     password: ALmhxmVFYpvlzLlfuhMp
-    url: jdbc:mysql://theralink-db.theralink.svc/mysql
+    url: jdbc:mysql://theralink-db.theralink.svc/mysql?useUnicode=yes&characterEncoding=UTF-8&characterSetResults=UTF-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate.ddl-auto: update
     generate-ddl: false
@@ -10,6 +11,5 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
-
 
 
