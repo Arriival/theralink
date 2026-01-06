@@ -1,8 +1,8 @@
 spring:
   datasource:
     username: root
-    password:
-    url: jdbc:mysql://localhost:3306/theralink
+    password: ALmhxmVFYpvlzLlfuhMp
+    url: jdbc:mysql://root:ALmhxmVFYpvlzLlfuhMp@theralink-db.theralink.svc:3306/mysql
   jpa:
     hibernate.ddl-auto: update
     generate-ddl: false
